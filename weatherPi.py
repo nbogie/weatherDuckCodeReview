@@ -194,6 +194,7 @@ def rotateTurntable(num, angle):
     duty = float(angle) / 10.0 + 2.5
     pwm.ChangeDutyCycle(duty)
 
+
 cityPosition = 0  # initialises cityPosition to 0
 
 num = 19  # sets "num" (the LED colour) to 19 (blue) for default
