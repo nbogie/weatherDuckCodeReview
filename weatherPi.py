@@ -1,4 +1,5 @@
 #import libraries
+import itertools
 import requests
 import RPi.GPIO as GPIO
 import time
@@ -116,34 +117,31 @@ def LEDColour(city):
     weatherID = getWeatherID(city)  # calls getData to get raw weather data
     return LEDColourForWeatherID(weatherID)
 
+
+#Calc which colour of LED should light up for a given weather ID. 
+# 0 is for yellow, 1 is for blue (default) and 2 is for red
 def LEDColourForWeatherID(weatherID):
-    # variable to store which colour of LED should light up. 0 is for yellow, 1 is for blue (default) and 2 is for red
-    colour = 1
 
-    # goes through all possible weather IDs, and assigns an LED colour for each
-    if (weatherID >= 200 and weatherID < 300):
-        colour = 2
-    elif (weatherID >= 300 and weatherID < 400):
-        colour = 1
-    elif (weatherID >= 500 and weatherID < 600):
-        colour = 1
-    elif (weatherID >= 600 and weatherID < 700):
-        colour = 1
-    elif (weatherID >= 700 and weatherID < 800):
-        colour = 2
-    elif (weatherID >= 800 and weatherID < 900):
-        colour = 0
-    elif (weatherID >= 900 and weatherID <= 906):
-        colour = 2
-    elif (weatherID >= 951 and weatherID <= 956):
-        colour = 0
-    elif (weatherID >= 957 and weatherID <= 962):
-        colour = 0
+    rangesAndColours = [
+        [[200,299], 2], 
+        [[300,399], 1], 
+        [[500,599], 1], 
+        [[600,699], 1], 
+        [[700,799], 2], 
+        [[800,899], 0], 
+        [[900,906], 2], 
+        [[951,956], 0], 
+        [[957,962], 0]
+    ]
+    def within(rangeAndColour):
+        r, c = rangeAndColour
+        return (weatherID >= r[0] and weatherID <= r[1])
+
+    v = next(itertools.ifilter(within, rangesAndColours), None)
+    if (v == None):
+        return 1
     else:
-        colour = 1
-
-    return colour
-
+        return v[1]
 
 # function to turn an LED on. "num" is the exact GPIO port to use
 def LEDOn(num):
