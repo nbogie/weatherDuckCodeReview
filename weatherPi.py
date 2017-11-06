@@ -212,18 +212,10 @@ def rotateTurntable(num, angle):
 
 
 # assigns the correct GPIO port for depending on the correct LED colour
+#defaults to pin for blue if colour not found
 def pinForLEDColour(colour):
-    if (colour == 0):
-        num = 13
-    elif (colour == 1):
-        num = 19
-    elif (colour == 2):
-        num = 26
-    else:
-        # sets "num" (the LED colour) to 19 (blue) for default
-        num = 19
-
-    return num
+    return {0: 13, 1: 19, 2: 26}.get(colour, 19)
+    #TODO: throw exception if illegal colour
 
 def runDuck():
     cityPosition = 0  # initialises cityPosition to 0
