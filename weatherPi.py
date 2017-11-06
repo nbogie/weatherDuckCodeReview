@@ -114,6 +114,9 @@ def printData(city):
 # function to decide which colour LED to light up, depending on the type of weather in the response
 def LEDColour(city):
     weatherID = getWeatherID(city)  # calls getData to get raw weather data
+    return LEDColourForWeatherID(weatherID)
+
+def LEDColourForWeatherID(weatherID):
     # variable to store which colour of LED should light up. 0 is for yellow, 1 is for blue (default) and 2 is for red
     colour = 1
 
