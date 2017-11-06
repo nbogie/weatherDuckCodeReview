@@ -171,8 +171,13 @@ def changeCities():
 # function to assign a direction (to move the motors in) based on the degree returned by the API
 def motorDirection(city):
     deg = getWindDirection(city)
+    direction = motorDirectionForWindDirection(deg)
+    print(direction)
+    return(direction)
 
-    # Gives angle for servo motor to turn the turntable the correct amount; ratio is 1:2+2/7
+
+# Gives angle for servo motor to turn the turntable the correct amount; ratio is 1:2+2/7
+def motorDirectionForWindDirection(deg):
     direction = 0
 
     # gives ranges in degrees for each direction
@@ -195,7 +200,6 @@ def motorDirection(city):
     else:
         direction = 0
 
-    print(direction)
     return(direction)
 
 
