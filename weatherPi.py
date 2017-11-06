@@ -1,5 +1,5 @@
 #import libraries
-import itertools
+from itertools import ifilter 
 import requests
 import RPi.GPIO as GPIO
 import time
@@ -137,7 +137,7 @@ def LEDColourForWeatherID(weatherID):
         r, c = rangeAndColour
         return (weatherID >= r[0] and weatherID <= r[1])
 
-    v = next(itertools.ifilter(within, rangesAndColours), None)
+    v = next(ifilter(within, rangesAndColours), None)
     if (v == None):
         return 1
     else:
