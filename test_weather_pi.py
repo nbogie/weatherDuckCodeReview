@@ -31,5 +31,34 @@ class TestWeatherPi(unittest.TestCase):
         self.assertEqual(1, f(400))
         self.assertEqual(1, f(499))
 
+
+    def test_motorDirectionForWindDirection(self):
+        f = weatherPi.motorDirectionForWindDirection
+        self.assertEqual(0, f(0))
+        self.assertEqual(0, f(45))
+        self.assertEqual(0, f(360))
+
+        self.assertEqual(16.2, f(46))
+        self.assertEqual(16.2, f(90))
+        self.assertEqual(32.4, f(91))
+        self.assertEqual(32.4, f(135))
+        
+        self.assertEqual(48.6, f(136))
+        self.assertEqual(48.6, f(180))
+        
+        self.assertEqual(64.8, f(181))
+        self.assertEqual(64.8, f(225))
+
+        self.assertEqual(81, f(226))
+        self.assertEqual(81, f(270))
+
+        self.assertEqual(97.2, f(271))
+        self.assertEqual(97.2, f(315))
+        
+        self.assertEqual(113.4, f(316))
+        self.assertEqual(113.4, f(359))
+
+        self.assertEqual(0, f(361))
+        
 if __name__ == '__main__':
     unittest.main()
