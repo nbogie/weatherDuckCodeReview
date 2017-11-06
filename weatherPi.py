@@ -12,10 +12,12 @@ KEY = "&APPID=9caeab719c222439d4a2747fc6591523"
 # an array of cities to cycle through, default is London
 cities = ["London,uk", "New York,us", "Houston", "Miama,us", "Aberdeen,uk"]
 
+
 # function that gets the raw weather data from the API
 def getData(city):
 	rGet = requests.get(URL + city + KEY)  # sends the GET request to the URL (including the token) with the authorization header.
 	return rGet
+
 
 # gets the ID of the weather condition
 def getWeatherID(city):
@@ -29,6 +31,7 @@ def getWeatherID(city):
 	else:
 		return 000
 
+
 # gets the main weather condition
 def getWeatherMain(city):
 	weatherData = getData(city)  # calls getData to get raw weather data
@@ -40,6 +43,7 @@ def getWeatherMain(city):
 			return "none"
 	else:
 		return "none"
+
 
 # gets the weather description
 def getWeatherDescription(city):
@@ -53,6 +57,7 @@ def getWeatherDescription(city):
 	else:
 		return "none"
 
+
 # gets the wind speed
 def getWindSpeed(city):
 	weatherData = getData(city)  # calls getData to get raw weather data
@@ -65,6 +70,7 @@ def getWindSpeed(city):
 	else:
 		return 0
 
+
 # gets the wind direction (in degrees)
 def getWindDirection(city):
 	weatherData = getData(city)  # calls getData to get raw weather data
@@ -76,6 +82,7 @@ def getWindDirection(city):
 			return 0
 	else:
 		return 0
+
 
 def printData(city):
     # prints the raw weather data, and each specific part of the data we isolated
@@ -92,6 +99,7 @@ def printData(city):
     # prints the number for the LED colour
     print(LEDColour(city))
     print("")
+
 
 # function to decide which colour LED to light up, depending on the type of weather in the response
 def LEDColour(city):
@@ -122,12 +130,14 @@ def LEDColour(city):
 
 	return colour
 
+
 # function to turn an LED on. "num" is the exact GPIO port to use
 def LEDOn(num):
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(num, GPIO.OUT)
         GPIO.output(num, True)
+
 
 # function to turn an LED off. "num" is the exact GPIO port to use
 def LEDOff(num):
@@ -136,6 +146,7 @@ def LEDOff(num):
     GPIO.setup(num, GPIO.OUT)
     GPIO.output(num, False)
 
+
 # function to change to the next city in the array (set up at the start of the program)
 def changeCities():
 	global cityPosition
@@ -143,6 +154,7 @@ def changeCities():
 		cityPosition = cityPosition + 1
 	else:  # otherwise, we have reached the end of the cycle and must begin again; therefore, set position to 0
 		cityPosition = 0;
+
 
 # function to assign a direction (to move the motors in) based on the degree returned by the API
 def motorDirection(city):
@@ -172,6 +184,7 @@ def motorDirection(city):
 
 	print(direction)
 	return(direction)
+
 
 # rotates the turntable (connected to a servo motor)
 def rotateTurntable(num, angle):
