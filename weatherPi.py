@@ -206,34 +206,37 @@ def rotateTurntable(num, angle):
     pwm.ChangeDutyCycle(duty)
 
 
-cityPosition = 0  # initialises cityPosition to 0
+def runDuck():
+    cityPosition = 0  # initialises cityPosition to 0
 
-num = 19  # sets "num" (the LED colour) to 19 (blue) for default
+    num = 19  # sets "num" (the LED colour) to 19 (blue) for default
 
-while (True):
-    # assigns the correct GPIO port for depending on the correct LED colour
-    if (LEDColour(cities[cityPosition]) == 0):
-        num = 13
-    elif (LEDColour(cities[cityPosition]) == 1):
-        num = 19
-    elif (LEDColour(cities[cityPosition]) == 2):
-        num = 26
-    else:
-        num = 19
+    while (True):
+        # assigns the correct GPIO port for depending on the correct LED colour
+        if (LEDColour(cities[cityPosition]) == 0):
+            num = 13
+        elif (LEDColour(cities[cityPosition]) == 1):
+            num = 19
+        elif (LEDColour(cities[cityPosition]) == 2):
+            num = 26
+        else:
+            num = 19
 
-    # waits for button to be pressed, then lights up the correct LED (as decided earlier)
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    inputState = GPIO.input(17)
-    if (inputState == False):
-        LEDOff(13)  # resets all LEDs
-        LEDOff(19)
-        LEDOff(26)
-        # turns the servo motor the correct number of degrees for that city's wind direction, as worked out in motorDirection()
-        rotateTurntable(18, motorDirection(cities[cityPosition]))
-        printData(cities[cityPosition])  # outputs all the data
-        LEDOn(num)
-        changeCities()
-        # time.sleep(3)
+        # waits for button to be pressed, then lights up the correct LED (as decided earlier)
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        inputState = GPIO.input(17)
+        if (inputState == False):
+            LEDOff(13)  # resets all LEDs
+            LEDOff(19)
+            LEDOff(26)
+            # turns the servo motor the correct number of degrees for that city's wind direction, as worked out in motorDirection()
+            rotateTurntable(18, motorDirection(cities[cityPosition]))
+            printData(cities[cityPosition])  # outputs all the data
+            LEDOn(num)
+            changeCities()
+            # time.sleep(3)
 
-print("Program finished.")
+    print("Program finished.")
+
+runDuck()
