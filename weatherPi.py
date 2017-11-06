@@ -227,8 +227,8 @@ def runDuck():
         # waits for button to be pressed, then lights up the correct LED (as decided earlier)
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        inputState = GPIO.input(17)
-        if (inputState == False):
+        buttonHigh = GPIO.input(17)
+        if (buttonHigh == False):
             LEDOff(13)  # resets all LEDs
             LEDOff(19)
             LEDOff(26)
