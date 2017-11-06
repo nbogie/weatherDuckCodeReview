@@ -15,7 +15,8 @@ cities = ["London,uk", "New York,us", "Houston", "Miama,us", "Aberdeen,uk"]
 
 # function that gets the raw weather data from the API
 def getData(city):
-    rGet = requests.get(URL + city + KEY)  # sends the GET request to the URL (including the token) with the authorization header.
+    # sends the GET request to the URL (including the token) with the authorization header.
+    rGet = requests.get(URL + city + KEY)
     return rGet
 
 
@@ -24,7 +25,8 @@ def getWeatherID(city):
     weatherData = getData(city)  # calls getData to get raw weather data
     if ("weather" in (weatherData.json())):  # error handling, in case the API does not return an ID
         if ("id" in (weatherData.json()["weather"][0])):
-            weatherID = weatherData.json()["weather"][0]["id"]  # parses the JSON to obtain the ID
+            # parses the JSON to obtain the ID
+            weatherID = weatherData.json()["weather"][0]["id"]
             return weatherID
         else:
             return 000
@@ -35,9 +37,11 @@ def getWeatherID(city):
 # gets the main weather condition
 def getWeatherMain(city):
     weatherData = getData(city)  # calls getData to get raw weather data
-    if ("weather" in (weatherData.json())):  # error handling, in case the API does not return a main weather condition
+    # error handling, in case the API does not return a main weather condition
+    if ("weather" in (weatherData.json())):
         if ("main" in (weatherData.json()["weather"][0])):
-            weatherMain = weatherData.json()["weather"][0]["main"]  # parses the JSON to obtain the main weather condition
+            # parses the JSON to obtain the main weather condition
+            weatherMain = weatherData.json()["weather"][0]["main"]
             return weatherMain
         else:
             return "none"
@@ -48,9 +52,12 @@ def getWeatherMain(city):
 # gets the weather description
 def getWeatherDescription(city):
     weatherData = getData(city)  # calls getData to get raw weather data
-    if ("weather" in (weatherData.json())):  # error handling, in case the API does not return a weather description
+    # error handling, in case the API does not return a weather description
+    if ("weather" in (weatherData.json())):
         if ("description" in (weatherData.json()["weather"][0])):
-            weatherDescription = weatherData.json()["weather"][0]["description"]  # parses the JSON to obtain the weather description
+            # parses the JSON to obtain the weather description
+            weatherDescription = weatherData.json(
+            )["weather"][0]["description"]
             return weatherDescription
         else:
             return "none"
@@ -63,7 +70,8 @@ def getWindSpeed(city):
     weatherData = getData(city)  # calls getData to get raw weather data
     if ("wind" in (weatherData.json())):  # error handling, in case the API does not return a wind speed
         if ("speed" in (weatherData.json()["wind"])):
-            windSpeed = weatherData.json()["wind"]["speed"]  # parses the JSON to obtain the wind speed
+            # parses the JSON to obtain the wind speed
+            windSpeed = weatherData.json()["wind"]["speed"]
             return windSpeed
         else:
             return 0
@@ -74,9 +82,11 @@ def getWindSpeed(city):
 # gets the wind direction (in degrees)
 def getWindDirection(city):
     weatherData = getData(city)  # calls getData to get raw weather data
-    if ("wind" in (weatherData.json())):  # error handling, in case the API does not return a wind direction
+    # error handling, in case the API does not return a wind direction
+    if ("wind" in (weatherData.json())):
         if ("deg" in (weatherData.json()["wind"])):
-            windDirection = weatherData.json()["wind"]["deg"]  # parses the JSON to obtain the wind direction
+            # parses the JSON to obtain the wind direction
+            windDirection = weatherData.json()["wind"]["deg"]
             return windDirection
         else:
             return 0
@@ -104,7 +114,8 @@ def printData(city):
 # function to decide which colour LED to light up, depending on the type of weather in the response
 def LEDColour(city):
     weatherID = getWeatherID(city)  # calls getData to get raw weather data
-    colour = 1  # variable to store which colour of LED should light up. 0 is for yellow, 1 is for blue (default) and 2 is for red
+    # variable to store which colour of LED should light up. 0 is for yellow, 1 is for blue (default) and 2 is for red
+    colour = 1
 
     # goes through all possible weather IDs, and assigns an LED colour for each
     if (weatherID >= 200 and weatherID < 300):
@@ -218,7 +229,8 @@ while (True):
         LEDOff(13)  # resets all LEDs
         LEDOff(19)
         LEDOff(26)
-        rotateTurntable(18, motorDirection(cities[cityPosition]))  # turns the servo motor the correct number of degrees for that city's wind direction, as worked out in motorDirection()
+        # turns the servo motor the correct number of degrees for that city's wind direction, as worked out in motorDirection()
+        rotateTurntable(18, motorDirection(cities[cityPosition]))
         printData(cities[cityPosition])  # outputs all the data
         LEDOn(num)
         changeCities()
