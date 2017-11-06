@@ -2,6 +2,13 @@ import weatherPi
 import unittest
 class TestWeatherPi(unittest.TestCase):
 
+    def test_pinForLEDColour(self):
+        f = weatherPi.pinForLEDColour
+        self.assertEqual(13, f(0))
+        self.assertEqual(19, f(1))
+        self.assertEqual(26, f(2))
+        self.assertEqual(19, f(99))
+
     def test_LEDColourForWeatherID(self):
         f = weatherPi.LEDColourForWeatherID
         self.assertEqual(1, f(199))
