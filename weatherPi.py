@@ -181,26 +181,25 @@ def motorDirectionForWindDirection(deg):
     direction = 0
 
     # gives ranges in degrees for each direction
-    if (deg >= 0 and deg <= 45):
-        direction = 0
-    elif (deg >= 45 and deg <= 90):
-        direction = 16.2
-    elif (deg >= 90 and deg <= 135):
-        direction = 32.4
-    elif (deg >= 135 and deg <= 180):
-        direction = 48.6
-    elif (deg >= 180 and deg <= 225):
-        direction = 64.8
-    elif (deg >= 225 and deg <= 270):
-        direction = 81
-    elif (deg >= 270 and deg <= 315):
-        direction = 97.2
-    elif (deg >= 315 and deg < 360):
-        direction = 113.4
-    else:
-        direction = 0
+    limitsAndDirections = [
+        [45, 0],
+        [90, 16.2],
+        [135, 32.4],
+        [180, 48.6],
+        [225,64.8],
+        [270, 81],
+        [315, 97.2],
+        [359.9999, 113.4],
+        [360, 0]
+    ]
+    if (deg < 0):
+        return 0 # TODO: raise an exception here.
 
-    return(direction)
+    val = next(ifilter(lambda pair: deg <= pair[0], limitsAndDirections), None)
+    if (val == None):
+        return 0
+    else:
+        return val[1]
 
 
 # rotates the turntable (connected to a servo motor)
