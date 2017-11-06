@@ -1,42 +1,46 @@
 import weatherPi
+from weatherPi import Colour
+
 import unittest
+
 class TestWeatherPi(unittest.TestCase):
 
     def test_pinForLEDColour(self):
         f = weatherPi.pinForLEDColour
-        self.assertEqual(13, f(0))
-        self.assertEqual(19, f(1))
-        self.assertEqual(26, f(2))
-        self.assertEqual(19, f(99))
+        self.assertEqual(13, f(Colour.YELLOW))
+        self.assertEqual(19, f(Colour.BLUE))
+        self.assertEqual(26, f(Colour.RED))
+        self.assertEqual(19, f(None))
+
 
     def test_LEDColourForWeatherID(self):
         f = weatherPi.LEDColourForWeatherID
-        self.assertEqual(1, f(199))
-        self.assertEqual(2, f(200))
-        self.assertEqual(2, f(299))
-        self.assertEqual(1, f(300))
-        self.assertEqual(1, f(399))
-        self.assertEqual(1, f(500))
-        self.assertEqual(1, f(599))
-        self.assertEqual(1, f(600))
-        self.assertEqual(1, f(699))
-        self.assertEqual(2, f(700))
-        self.assertEqual(2, f(799))
-        self.assertEqual(0, f(800))
-        self.assertEqual(0, f(899))
-        self.assertEqual(2, f(900))
-        self.assertEqual(2, f(906))
-        self.assertEqual(1, f(907))
-        self.assertEqual(1, f(950))
-        self.assertEqual(0, f(951))
-        self.assertEqual(0, f(956))
-        self.assertEqual(0, f(957))
-        self.assertEqual(0, f(962))
-        self.assertEqual(1, f(963))
+        self.assertEqual(Colour.BLUE, f(199))
+        self.assertEqual(Colour.RED, f(200))
+        self.assertEqual(Colour.RED, f(299))
+        self.assertEqual(Colour.BLUE, f(300))
+        self.assertEqual(Colour.BLUE, f(399))
+        self.assertEqual(Colour.BLUE, f(500))
+        self.assertEqual(Colour.BLUE, f(599))
+        self.assertEqual(Colour.BLUE, f(600))
+        self.assertEqual(Colour.BLUE, f(699))
+        self.assertEqual(Colour.RED, f(700))
+        self.assertEqual(Colour.RED, f(799))
+        self.assertEqual(Colour.YELLOW, f(800))
+        self.assertEqual(Colour.YELLOW, f(899))
+        self.assertEqual(Colour.RED, f(900))
+        self.assertEqual(Colour.RED, f(906))
+        self.assertEqual(Colour.BLUE, f(907))
+        self.assertEqual(Colour.BLUE, f(950))
+        self.assertEqual(Colour.YELLOW, f(951))
+        self.assertEqual(Colour.YELLOW, f(956))
+        self.assertEqual(Colour.YELLOW, f(957))
+        self.assertEqual(Colour.YELLOW, f(962))
+        self.assertEqual(Colour.BLUE, f(963))
 
-        self.assertEqual(1, f(0))
-        self.assertEqual(1, f(400))
-        self.assertEqual(1, f(499))
+        self.assertEqual(Colour.BLUE, f(0))
+        self.assertEqual(Colour.BLUE, f(400))
+        self.assertEqual(Colour.BLUE, f(499))
 
 
     def test_motorDirectionForWindDirection(self):

@@ -4,6 +4,11 @@ import requests
 import RPi.GPIO as GPIO
 import time
 
+class Colour():
+    RED = 1
+    YELLOW = 2
+    BLUE = 3
+
 # declare variables
 
 # open weather map's endpoint
@@ -119,19 +124,18 @@ def LEDColour(city):
 
 
 #Calc which colour of LED should light up for a given weather ID. 
-# 0 is for yellow, 1 is for blue (default) and 2 is for red
 def LEDColourForWeatherID(weatherID):
 
     rangesAndColours = [
-        [[200,299], 2], 
-        [[300,399], 1], 
-        [[500,599], 1], 
-        [[600,699], 1], 
-        [[700,799], 2], 
-        [[800,899], 0], 
-        [[900,906], 2], 
-        [[951,956], 0], 
-        [[957,962], 0]
+        [[200,299], Colour.RED], 
+        [[300,399], Colour.BLUE], 
+        [[500,599], Colour.BLUE], 
+        [[600,699], Colour.BLUE], 
+        [[700,799], Colour.RED], 
+        [[800,899], Colour.YELLOW], 
+        [[900,906], Colour.RED], 
+        [[951,956], Colour.YELLOW], 
+        [[957,962], Colour.YELLOW]
     ]
     def within(rangeAndColour):
         r, c = rangeAndColour
@@ -139,7 +143,7 @@ def LEDColourForWeatherID(weatherID):
 
     v = next(ifilter(within, rangesAndColours), None)
     if (v == None):
-        return 1
+        return Colour.BLUE
     else:
         return v[1]
 
@@ -213,8 +217,9 @@ def rotateTurntable(num, angle):
 # assigns the correct GPIO port for depending on the correct LED colour
 #defaults to pin for blue if colour not found
 def pinForLEDColour(colour):
-    return {0: 13, 1: 19, 2: 26}.get(colour, 19)
-    #TODO: throw exception if illegal colour
+    return {
+        Colour.YELLOW: 13, Colour.BLUE: 19, Colour.RED: 26
+    }.get(colour, 19)
 
 def runDuck():
     cityPosition = 0  # initialises cityPosition to 0
