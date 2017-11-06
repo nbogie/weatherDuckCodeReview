@@ -211,21 +211,26 @@ def rotateTurntable(num, angle):
     pwm.ChangeDutyCycle(duty)
 
 
+# assigns the correct GPIO port for depending on the correct LED colour
+def pinForLEDColour(colour):
+    if (colour == 0):
+        num = 13
+    elif (colour == 1):
+        num = 19
+    elif (colour == 2):
+        num = 26
+    else:
+        # sets "num" (the LED colour) to 19 (blue) for default
+        num = 19
+
+    return num
+
 def runDuck():
     cityPosition = 0  # initialises cityPosition to 0
 
-    num = 19  # sets "num" (the LED colour) to 19 (blue) for default
-
     while (True):
-        # assigns the correct GPIO port for depending on the correct LED colour
-        if (LEDColour(cities[cityPosition]) == 0):
-            num = 13
-        elif (LEDColour(cities[cityPosition]) == 1):
-            num = 19
-        elif (LEDColour(cities[cityPosition]) == 2):
-            num = 26
-        else:
-            num = 19
+        colour = LEDColour(cities[cityPosition])
+        num = pinForLEDColour(colour)
 
         # waits for button to be pressed, then lights up the correct LED (as decided earlier)
         GPIO.setmode(GPIO.BCM)
