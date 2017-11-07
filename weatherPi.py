@@ -132,20 +132,20 @@ def LEDColourForWeatherID(weatherID):
     else:
         return v[1]
 
-# function to turn an LED on. "num" is the exact GPIO port to use
-def LEDOn(num):
+# function to turn an LED on. "pinNum" is the exact GPIO port to use
+def LEDOn(pinNum):
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(num, GPIO.OUT)
-    GPIO.output(num, True)
+    GPIO.setup(pinNum, GPIO.OUT)
+    GPIO.output(pinNum, True)
 
 
-# function to turn an LED off. "num" is the exact GPIO port to use
-def LEDOff(num):
+# function to turn an LED off. "pinNum" is the exact GPIO port to use
+def LEDOff(pinNum):
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(num, GPIO.OUT)
-    GPIO.output(num, False)
+    GPIO.setup(pinNum, GPIO.OUT)
+    GPIO.output(pinNum, False)
 
 
 # function to change to the next city in the array (set up at the start of the program)
@@ -189,9 +189,9 @@ def motorDirectionForWindDirection(deg):
 
 
 # rotates the turntable (connected to a servo motor)
-def rotateTurntable(num, angle):
+def rotateTurntable(pinNum, angle):
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(num, GPIO.OUT)
+    GPIO.setup(pinNum, GPIO.OUT)
     pwm = GPIO.PWM(18, 100)
     duty = float(angle) / 10.0 + 2.5
     pwm.ChangeDutyCycle(duty)
