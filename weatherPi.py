@@ -2,7 +2,6 @@
 from itertools import ifilter
 import requests
 import RPi.GPIO as GPIO
-import time
 
 
 class Colour():
@@ -237,7 +236,6 @@ def main():
             printData(currentCity)  # outputs all the data
             LEDOn(num)
             cityPosition = nextCityPosition(cityPosition)
-            # time.sleep(3)
 
     print("Program finished.")
 
