@@ -13,13 +13,14 @@ class Colour():
 # declare constants
 
 
+BUTTON_PIN = 17
+SERVO_PIN = 18
 # endpoint for open weather map
 URL = "http://api.openweathermap.org/data/2.5/weather?q="
 # the authorisation key
 KEY = "&APPID=9caeab719c222439d4a2747fc6591523"
 # an array of cities to cycle through, default is London
 CITIES = ["London,uk", "New York,us", "Houston", "Miama,us", "Aberdeen,uk"]
-
 
 # function that gets the raw weather data from the API
 def getData(city):
@@ -204,7 +205,7 @@ def motorDirectionForWindDirection(deg):
 def rotateTurntable(pinNum, angle):
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(pinNum, GPIO.OUT)
-    pwm = GPIO.PWM(18, 100)
+    pwm = GPIO.PWM(pinNum, 100)
     duty = float(angle) / 10.0 + 2.5
     pwm.ChangeDutyCycle(duty)
 
@@ -227,12 +228,12 @@ def main():
 
         # waits for button to be pressed, then lights up the correct LED (as decided earlier)
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        buttonHigh = GPIO.input(17)
+        GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        buttonHigh = GPIO.input(BUTTON_PIN)
         if (not buttonHigh):
             allLEDsOff()
             # turns the servo motor the correct number of degrees for that city's wind direction, as worked out in motorDirection()
-            rotateTurntable(18, motorDirection(currentCity))
+            rotateTurntable(SERVO_PIN, motorDirection(currentCity))
             printData(currentCity)  # outputs all the data
             LEDOn(num)
             cityPosition = nextCityPosition(cityPosition)
