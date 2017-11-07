@@ -89,6 +89,10 @@ def getWindDirection(city):
 
 def printData(city):
     # prints the raw weather data, and each specific part of the data we isolated
+    # TODO: These all involve a call to getData(city) each of which
+    #       makes the exact same call to the API.
+    #       Instead, call getData(city) once and pass that json around.
+
     print("")  # blank lines just make the data easier to read
     print(getData(city).text)  # outputs the full raw data as JSON
     print("")
