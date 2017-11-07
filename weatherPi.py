@@ -153,6 +153,12 @@ def LEDOff(pinNum):
     GPIO.output(pinNum, False)
 
 
+def allLEDsOff():
+    LEDOff(13)
+    LEDOff(19)
+    LEDOff(26)
+
+
 # function to change to the next city in the array (set up at the start of the program)
 def nextCityPosition(pos):
     # Cycles through 0..3, although there are 5 cities, so 0..4 correct!
@@ -224,9 +230,7 @@ def main():
         GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         buttonHigh = GPIO.input(17)
         if (not buttonHigh):
-            LEDOff(13)  # resets all LEDs
-            LEDOff(19)
-            LEDOff(26)
+            allLEDsOff()
             # turns the servo motor the correct number of degrees for that city's wind direction, as worked out in motorDirection()
             rotateTurntable(18, motorDirection(currentCity))
             printData(currentCity)  # outputs all the data
