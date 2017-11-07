@@ -150,11 +150,9 @@ def LEDOff(num):
 
 # function to change to the next city in the array (set up at the start of the program)
 def nextCityPosition(pos):
-    if(pos < 4):  # there are 5 cities to cycle through; if the current position is < 4 (so it is 0, 1, 2 or 3) simply increase it by 1
-        return pos + 1
-    else:  # otherwise, we have reached the end of the cycle and must begin again; therefore, set position to 0
-        return 0
-
+    #Cycles through 0..3, although there are 5 cities, so 0..4 correct!
+    # (Maintaining previous behaviour pre-refactoring)
+    return (pos + 1) % 4 
 
 # function to assign a direction (to move the motors in) based on the degree returned by the API
 def motorDirection(city):
