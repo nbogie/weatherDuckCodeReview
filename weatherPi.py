@@ -29,74 +29,59 @@ def getData(city):
 # gets the ID of the weather condition
 def getWeatherID(city):
     weatherData = getData(city)  # calls getData to get raw weather data
-    if ("weather" in (weatherData.json())):  # error handling, in case the API does not return an ID
-        if ("id" in (weatherData.json()["weather"][0])):
-            # parses the JSON to obtain the ID
-            weatherID = weatherData.json()["weather"][0]["id"]
-            return weatherID
-        else:
-            return 000
+    if ("weather" in (weatherData.json()) and
+        "id" in (weatherData.json()["weather"][0])):
+        # parses the JSON to obtain the ID
+        return weatherData.json()["weather"][0]["id"]
     else:
-        return 000
+        # error handling, in case the API does not return an ID
+        return 0
 
 
 # gets the main weather condition
 def getWeatherMain(city):
     weatherData = getData(city)  # calls getData to get raw weather data
-    # error handling, in case the API does not return a main weather condition
-    if ("weather" in (weatherData.json())):
-        if ("main" in (weatherData.json()["weather"][0])):
-            # parses the JSON to obtain the main weather condition
-            weatherMain = weatherData.json()["weather"][0]["main"]
-            return weatherMain
-        else:
-            return "none"
+    if ("weather" in (weatherData.json()) and 
+        "main" in (weatherData.json()["weather"][0])):
+        # parses the JSON to obtain the main weather condition
+        return weatherData.json()["weather"][0]["main"]
     else:
+        # error handling, in case the API does not return a main weather condition
         return "none"
 
 
 # gets the weather description
 def getWeatherDescription(city):
     weatherData = getData(city)  # calls getData to get raw weather data
-    # error handling, in case the API does not return a weather description
-    if ("weather" in (weatherData.json())):
-        if ("description" in (weatherData.json()["weather"][0])):
-            # parses the JSON to obtain the weather description
-            weatherDescription = weatherData.json(
-            )["weather"][0]["description"]
-            return weatherDescription
-        else:
-            return "none"
+    if ("weather" in (weatherData.json()) and 
+        "description" in (weatherData.json()["weather"][0])):
+        # parses the JSON to obtain the weather description
+        return weatherData.json()["weather"][0]["description"]
     else:
+        # error handling, in case the API does not return a weather description
         return "none"
 
 
 # gets the wind speed
 def getWindSpeed(city):
     weatherData = getData(city)  # calls getData to get raw weather data
-    if ("wind" in (weatherData.json())):  # error handling, in case the API does not return a wind speed
-        if ("speed" in (weatherData.json()["wind"])):
-            # parses the JSON to obtain the wind speed
-            windSpeed = weatherData.json()["wind"]["speed"]
-            return windSpeed
-        else:
-            return 0
+    if ("wind" in (weatherData.json()) and "speed" in (weatherData.json()["wind"])):  
+        # parses the JSON to obtain the wind speed
+        return weatherData.json()["wind"]["speed"]
     else:
+        # error handling, in case the API does not return a wind speed
         return 0
 
 
 # gets the wind direction (in degrees)
 def getWindDirection(city):
     weatherData = getData(city)  # calls getData to get raw weather data
-    # error handling, in case the API does not return a wind direction
-    if ("wind" in (weatherData.json())):
-        if ("deg" in (weatherData.json()["wind"])):
-            # parses the JSON to obtain the wind direction
-            windDirection = weatherData.json()["wind"]["deg"]
-            return windDirection
-        else:
-            return 0
+    if ("wind" in (weatherData.json()) and
+        "deg" in (weatherData.json()["wind"])):
+        # parses the JSON to obtain the wind direction
+        return weatherData.json()["wind"]["deg"]
     else:
+        # error handling, in case the API does not return a wind direction
         return 0
 
 
