@@ -16,7 +16,7 @@ URL = "http://api.openweathermap.org/data/2.5/weather?q="
 # the authorisation key
 KEY = "&APPID=9caeab719c222439d4a2747fc6591523"
 # an array of cities to cycle through, default is London
-cities = ["London,uk", "New York,us", "Houston", "Miama,us", "Aberdeen,uk"]
+CITIES = ["London,uk", "New York,us", "Houston", "Miama,us", "Aberdeen,uk"]
 
 
 # function that gets the raw weather data from the API
@@ -210,7 +210,8 @@ def main():
     cityPosition = 0  # initialises cityPosition to 0
 
     while (True):
-        colour = LEDColour(cities[cityPosition])
+        currentCity = CITIES[cityPosition]
+        colour = LEDColour(currentCity)
         num = pinForLEDColour(colour)
 
         # waits for button to be pressed, then lights up the correct LED (as decided earlier)
@@ -222,8 +223,8 @@ def main():
             LEDOff(19)
             LEDOff(26)
             # turns the servo motor the correct number of degrees for that city's wind direction, as worked out in motorDirection()
-            rotateTurntable(18, motorDirection(cities[cityPosition]))
-            printData(cities[cityPosition])  # outputs all the data
+            rotateTurntable(18, motorDirection(currentCity))
+            printData(currentCity)  # outputs all the data
             LEDOn(num)
             cityPosition = nextCityPosition(cityPosition)
             # time.sleep(3)
