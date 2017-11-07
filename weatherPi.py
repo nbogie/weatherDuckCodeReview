@@ -9,7 +9,7 @@ class Colour():
     YELLOW = 2
     BLUE = 3
 
-# declare variables
+# declare constants
 
 # open weather map's endpoint
 URL = "http://api.openweathermap.org/data/2.5/weather?q="
