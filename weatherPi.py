@@ -11,7 +11,7 @@ class Colour():
 
 # declare constants
 
-# open weather map's endpoint
+# endpoint for open weather map
 URL = "http://api.openweathermap.org/data/2.5/weather?q="
 # the authorisation key
 KEY = "&APPID=9caeab719c222439d4a2747fc6591523"
@@ -164,7 +164,6 @@ def motorDirection(city):
 
 # Gives angle for servo motor to turn the turntable the correct amount; ratio is 1:2+2/7
 def motorDirectionForWindDirection(deg):
-    direction = 0
 
     # gives ranges in degrees for each direction
     limitsAndDirections = [
