@@ -1,8 +1,9 @@
 #import libraries
-from itertools import ifilter 
+from itertools import ifilter
 import requests
 import RPi.GPIO as GPIO
 import time
+
 
 class Colour():
     RED = 1
@@ -10,6 +11,7 @@ class Colour():
     BLUE = 3
 
 # declare constants
+
 
 # endpoint for open weather map
 URL = "http://api.openweathermap.org/data/2.5/weather?q="
@@ -30,7 +32,7 @@ def getData(city):
 def getWeatherID(city):
     weatherData = getData(city)  # calls getData to get raw weather data
     if ("weather" in (weatherData.json()) and
-        "id" in (weatherData.json()["weather"][0])):
+            "id" in (weatherData.json()["weather"][0])):
         # parses the JSON to obtain the ID
         return weatherData.json()["weather"][0]["id"]
     else:
@@ -41,8 +43,8 @@ def getWeatherID(city):
 # gets the main weather condition
 def getWeatherMain(city):
     weatherData = getData(city)  # calls getData to get raw weather data
-    if ("weather" in (weatherData.json()) and 
-        "main" in (weatherData.json()["weather"][0])):
+    if ("weather" in (weatherData.json()) and
+            "main" in (weatherData.json()["weather"][0])):
         # parses the JSON to obtain the main weather condition
         return weatherData.json()["weather"][0]["main"]
     else:
@@ -53,8 +55,8 @@ def getWeatherMain(city):
 # gets the weather description
 def getWeatherDescription(city):
     weatherData = getData(city)  # calls getData to get raw weather data
-    if ("weather" in (weatherData.json()) and 
-        "description" in (weatherData.json()["weather"][0])):
+    if ("weather" in (weatherData.json()) and
+            "description" in (weatherData.json()["weather"][0])):
         # parses the JSON to obtain the weather description
         return weatherData.json()["weather"][0]["description"]
     else:
@@ -65,7 +67,7 @@ def getWeatherDescription(city):
 # gets the wind speed
 def getWindSpeed(city):
     weatherData = getData(city)  # calls getData to get raw weather data
-    if ("wind" in (weatherData.json()) and "speed" in (weatherData.json()["wind"])):  
+    if ("wind" in (weatherData.json()) and "speed" in (weatherData.json()["wind"])):
         # parses the JSON to obtain the wind speed
         return weatherData.json()["wind"]["speed"]
     else:
@@ -77,7 +79,7 @@ def getWindSpeed(city):
 def getWindDirection(city):
     weatherData = getData(city)  # calls getData to get raw weather data
     if ("wind" in (weatherData.json()) and
-        "deg" in (weatherData.json()["wind"])):
+            "deg" in (weatherData.json()["wind"])):
         # parses the JSON to obtain the wind direction
         return weatherData.json()["wind"]["deg"]
     else:
@@ -108,20 +110,21 @@ def LEDColour(city):
     return LEDColourForWeatherID(weatherID)
 
 
-#Calc which colour of LED should light up for a given weather ID. 
+# Calc which colour of LED should light up for a given weather ID.
 def LEDColourForWeatherID(weatherID):
 
     rangesAndColours = [
-        [[200,299], Colour.RED], 
-        [[300,399], Colour.BLUE], 
-        [[500,599], Colour.BLUE], 
-        [[600,699], Colour.BLUE], 
-        [[700,799], Colour.RED], 
-        [[800,899], Colour.YELLOW], 
-        [[900,906], Colour.RED], 
-        [[951,956], Colour.YELLOW], 
-        [[957,962], Colour.YELLOW]
+        [[200, 299], Colour.RED],
+        [[300, 399], Colour.BLUE],
+        [[500, 599], Colour.BLUE],
+        [[600, 699], Colour.BLUE],
+        [[700, 799], Colour.RED],
+        [[800, 899], Colour.YELLOW],
+        [[900, 906], Colour.RED],
+        [[951, 956], Colour.YELLOW],
+        [[957, 962], Colour.YELLOW]
     ]
+
     def within(rangeAndColour):
         r, c = rangeAndColour
         return (weatherID >= r[0] and weatherID <= r[1])
@@ -133,6 +136,8 @@ def LEDColourForWeatherID(weatherID):
         return v[1]
 
 # function to turn an LED on. "pinNum" is the exact GPIO port to use
+
+
 def LEDOn(pinNum):
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
@@ -150,11 +155,13 @@ def LEDOff(pinNum):
 
 # function to change to the next city in the array (set up at the start of the program)
 def nextCityPosition(pos):
-    #Cycles through 0..3, although there are 5 cities, so 0..4 correct!
+    # Cycles through 0..3, although there are 5 cities, so 0..4 correct!
     # (Maintaining previous behaviour pre-refactoring)
-    return (pos + 1) % 4 
+    return (pos + 1) % 4
 
 # function to assign a direction (to move the motors in) based on the degree returned by the API
+
+
 def motorDirection(city):
     deg = getWindDirection(city)
     direction = motorDirectionForWindDirection(deg)
@@ -171,14 +178,14 @@ def motorDirectionForWindDirection(deg):
         [90, 16.2],
         [135, 32.4],
         [180, 48.6],
-        [225,64.8],
+        [225, 64.8],
         [270, 81],
         [315, 97.2],
         [359.9999, 113.4],
         [360, 0]
     ]
     if (deg < 0):
-        return 0 # TODO: raise an exception here.
+        return 0  # TODO: raise an exception here.
 
     val = next(ifilter(lambda pair: deg <= pair[0], limitsAndDirections), None)
     if (val == None):
@@ -197,11 +204,12 @@ def rotateTurntable(pinNum, angle):
 
 
 # assigns the correct GPIO port for depending on the correct LED colour
-#defaults to pin for blue if colour not found
+# defaults to pin for blue if colour not found
 def pinForLEDColour(colour):
     return {
         Colour.YELLOW: 13, Colour.BLUE: 19, Colour.RED: 26
     }.get(colour, 19)
+
 
 def main():
     cityPosition = 0  # initialises cityPosition to 0
@@ -227,6 +235,7 @@ def main():
             # time.sleep(3)
 
     print("Program finished.")
+
 
 if __name__ == "__main__":
     main()
