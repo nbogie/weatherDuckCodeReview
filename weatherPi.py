@@ -221,7 +221,7 @@ def pinForLEDColour(colour):
         Colour.YELLOW: 13, Colour.BLUE: 19, Colour.RED: 26
     }.get(colour, 19)
 
-def runDuck():
+def main():
     cityPosition = 0  # initialises cityPosition to 0
 
     while (True):
@@ -245,4 +245,5 @@ def runDuck():
 
     print("Program finished.")
 
-runDuck()
+if __name__ == "__main__":
+    main()
